@@ -14,11 +14,11 @@ function Footer() {
           </Link>
 
         </div>
-        <p className="text-sm text-neutral-400">Copyright 2025 @ AiCodinghub - All Right Reserved.</p>
+        <p className="text-xs text-neutral-400  md:text-md">Copyright 2025 @ AiCodinghub - All Right Reserved.</p>
       </div>
 
-    <div>
-      <p className="text-sm text-neutral-400">Follow us on social media: </p>
+    <div className="flex flex-wrap gap-3 items-center">
+      <p className="text-sm text-neutral-400 ">Follow us on social media: </p>
       <div className="flex items-center gap-2">
         <p className="w-fit bg-blue-700 rounded-full p-1 cursor-pointer"><Facebook size={22}/></p>
         <p className="w-fit bg-pink-700 rounded-full p-1 cursor-pointer"><Instagram size={22}/></p>

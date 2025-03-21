@@ -13,3 +13,24 @@ export const assets={
     sample_img,
     people1
 }
+
+export const plans = [
+    {
+      id: 'Basic',
+      price: 10,
+      credits: 15,
+      desc: 'Best for personal use.'
+    },
+    {
+      id: 'Advanced',
+      price: 30,
+      credits: 70,
+      desc: 'Best for business use.'
+    },
+    {
+      id: 'Premier',
+      price: 50,
+      credits: 150,
+      desc: 'Best for enterprise use.'
+    },
+  ]
