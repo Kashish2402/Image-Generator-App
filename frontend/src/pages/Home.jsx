@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../components/Header'
 import Steps from '../components/Steps'
 import Description from '../components/Description'
+import Testimonial from '../components/Testimonial'
 
 function Home() {
   return (
@@ -9,6 +10,7 @@ function Home() {
       <Header/>
       <Steps/>
       <Description/>
+      <Testimonial/>
     </div>
   )
 }

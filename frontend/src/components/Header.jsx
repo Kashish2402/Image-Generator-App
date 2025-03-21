@@ -82,7 +82,7 @@ function Header() {
               alt=""
               width={60}
               className="rounded hover:scale-105 transition-all duration-300 cursor-pointer max-sm:w-10"
-              key={item}
+              key={index}
             />
           ))}
       </motion.div>
