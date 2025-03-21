@@ -1,1 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Outfit:wght@100..900&display=swap');
+
 @import "tailwindcss";
+
+*{
+    font-family: Outfit;
+  
+}
+
+.step{
+    box-shadow: 0 0 7px 1px rgba(128, 128, 128, 0.2);
+}
