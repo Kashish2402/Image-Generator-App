@@ -7,6 +7,8 @@ const generateAccessToken = async (userId) => {
   try {
     const user = await User.findById(userId);
 
+    if (!user) throw new ApiError(404, "User not found");
+
     const accessToken = await user.generateAccessToken();
     const refreshToken = await user.generateRefreshToken();
     user.refreshToken = refreshToken;
@@ -100,4 +102,16 @@ const logout = asyncHandler(async (req, res, next) => {
     .json(new ApiResponse(200, {}, "User Logged Out Successfully..."));
 });
 
-export { signUp, logout, login };
+const userCredits = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user?._id).select("-password");
+
+  return res.status(200).json(
+    new ApiResponse(200, {
+      credits: user.creditBalance,
+      user: { fullName: user.fullName },
+    }, "User credit details fetched successfully")
+  );
+  
+});
+
+export { signUp, logout, login, userCredits };
