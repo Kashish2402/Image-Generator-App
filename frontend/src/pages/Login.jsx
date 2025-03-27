@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Password from "../components/Password";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, delay } from "motion/react";
 import { Mail } from "lucide-react";
+import { AppContext } from "../context/AppContext";
+
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -11,8 +13,18 @@ function Login() {
     password: "",
   });
 
+  const { login } = useContext(AppContext);
+  const navigate = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
+    await login(formData);
+    navigate("/");
+    setFormData({
+      fullName: "",
+      email: "",
+      password: "",
+    });
   };
 
   return (
