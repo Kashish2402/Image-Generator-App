@@ -83,6 +83,8 @@ function SignUp() {
                 setFormData({ ...formData, password: e.target.value })
               }
             />
+
+            {<p className="text-red-700 text-center">{error && error}</p>}
           </div>
 
           <button
