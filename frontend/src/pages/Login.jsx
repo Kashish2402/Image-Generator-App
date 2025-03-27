@@ -13,12 +13,21 @@ function Login() {
     password: "",
   });
 
+  const [error,setError]=useState()
   const { login } = useContext(AppContext);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    await login(formData);
+    setError("")
+    const checklogin=await login(formData);
+
+    
+    if(!checklogin.success){
+      setError(checklogin.message)
+      return 
+    }
+
     navigate("/");
     setFormData({
       fullName: "",
@@ -69,6 +78,8 @@ function Login() {
               }
             />
           </div>
+
+          <p className="text-red-700">{error && error}</p>
 
           <button
             type="submit"
