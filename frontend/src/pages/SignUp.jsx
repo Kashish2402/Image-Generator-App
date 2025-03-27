@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Password from "../components/Password";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { motion, delay } from "motion/react";
 import { Mail, UserRound } from "lucide-react";
+import { AppContext } from "../context/AppContext";
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -10,9 +11,25 @@ function SignUp() {
     email: "",
     password: "",
   });
+  const navigate=useNavigate()
+
+  const [error, setError] = useState();
+
+  const { signUp } = useContext(AppContext);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+    setError("");
+
+    const check = await signUp(formData);
+
+    if (!check.success) {
+      setError(check.message);
+      return;
+    }
+    
+    navigate('/')
+    setFormData({ fullName: "", email: "", password: "" });
   };
 
   return (
@@ -35,7 +52,7 @@ function SignUp() {
         >
           <div className="w-full flex flex-col gap-6">
             <div className="w-full flex bg-gray-700/20 items-center px-2 rounded-lg">
-              <UserRound size={20} className="text-white/50"/>
+              <UserRound size={20} className="text-white/50" />
               <input
                 type="text"
                 value={formData.fullName}
@@ -48,7 +65,7 @@ function SignUp() {
             </div>
 
             <div className="w-full flex bg-gray-700/20 items-center px-2 rounded-lg">
-            <Mail size={20} className="text-white/50" />
+              <Mail size={20} className="text-white/50" />
               <input
                 type="text"
                 value={formData.email}
