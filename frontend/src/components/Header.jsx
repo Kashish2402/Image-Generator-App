@@ -2,19 +2,21 @@ import { ArrowRight } from "lucide-react";
 import React, { useContext } from "react";
 import { delay, motion } from "motion/react";
 import { assets } from "../assets/assets";
-import AppContext from "../context/AppContext";
+import {AppContext} from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 
 function Header() {
-  // const { user, setShowLogin } = useContext(AppContext);
+  const {user}=useContext(AppContext)
 
   const navigate = useNavigate();
+
+
 
   const handleClick = () => {
     if (user) {
       navigate("/result");
     } else {
-      setShowLogin(true);
+      navigate("/login")
     }
   };
   return (
