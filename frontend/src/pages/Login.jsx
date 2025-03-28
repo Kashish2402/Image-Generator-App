@@ -14,7 +14,7 @@ function Login() {
   });
 
   const [error,setError]=useState()
-  const { login } = useContext(AppContext);
+  const { login,user } = useContext(AppContext);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -29,6 +29,7 @@ function Login() {
     }
 
     navigate("/");
+    console.log(user)
     setFormData({
       fullName: "",
       email: "",
