@@ -106,12 +106,21 @@ const userCredits = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user?._id).select("-password");
 
   return res.status(200).json(
-    new ApiResponse(200, {
-      credits: user.creditBalance,
-      user: { fullName: user.fullName },
-    }, "User credit details fetched successfully")
+    new ApiResponse(
+      200,
+      {
+        credits: user.creditBalance,
+        user: { fullName: user.fullName },
+      },
+      "User credit details fetched successfully"
+    )
   );
-  
 });
 
-export { signUp, logout, login, userCredits };
+const getCurrentUser = asyncHandler(async (req, res, next) => {
+  res
+    .status(200)
+    .json(new ApiResponse(200, req.user, "User fetched Successfully"));
+});
+
+export { signUp, logout, login, userCredits,getCurrentUser };
