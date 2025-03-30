@@ -6,7 +6,25 @@ export const AppContext = createContext();
 const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [credit, setCredit] = useState(null);
- 
+
+  const checkAuth = async () => {
+    try {
+      const response = await axiosInstance.get("/users/check-auth");
+      if (response.data.data) {
+        setUser(response.data.data);
+        return { success: true };
+      } else {
+        setUser(null);
+      }
+    } catch (error) {
+      console.log(error);
+      console.error(
+        "Unable to fetch Cuurent user !! Error :::",
+        error.response?.data || error.message
+      );
+      return { success: false };
+    }
+  };
 
   const login = async (formData) => {
     try {
@@ -46,8 +64,9 @@ const AppContextProvider = ({ children }) => {
     try {
       const response = await axiosInstance.post("/users/logout");
 
-      if (response.success) {
+      if (response.data.success) {
         setUser(null);
+        setCredit(null)
       }
 
       return { success: true };
@@ -100,6 +119,7 @@ const AppContextProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         user,
+        checkAuth,
         setUser,
         credit,
         setCredit,
