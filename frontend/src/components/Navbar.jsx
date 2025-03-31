@@ -4,11 +4,10 @@ import { Star } from "lucide-react";
 import { AppContext } from "../context/AppContext";
 
 function Navbar() {
-  const { user,logout,checkAuth } = useContext(AppContext);
+  const { user, logout } = useContext(AppContext);
 
-  const [showLogout,setShowLogout]=useState(false)
+  const [showLogout, setShowLogout] = useState(false);
   const navigate = useNavigate();
-
 
   // useEffect(() => {
   //   console.log("User changed:", user); // 🔍 Debug: Check if the user state updates in Navbar
@@ -45,20 +44,32 @@ function Navbar() {
       ) : (
         <div className="">
           <div className="text-white flex items-center space-x-4 relative">
-            <button className="flex items-center justify-center gap-1 bg-black px-3 py-1 rounded-2xl">
+            <button className="flex items-center justify-center gap-1 bg-black px-3 py-1 rounded-2xl" onClick={()=>navigate('/buy')}>
               <Star size={16} />
               <p className="text-white/80 text-nowrap">Credits left : 5</p>
             </button>
-            <p onClick={()=>setShowLogout(!showLogout)} className="cursor-pointer">
-              Hi, {" "}
+            <p
+              onClick={() => setShowLogout(!showLogout)}
+              className="cursor-pointer"
+            >
+              Hi,{" "}
               {user?.fullName.length <= 6
                 ? user?.fullName
-                : user.fullName.slice(0, 6 )+ "..."}
+                : user.fullName.slice(0, 6) + "..."}
             </p>
 
-            {showLogout && <div className="bg-black absolute right-0 top-8 text-white px-3 py-2 rounded-md shadow-lg"><button onClick={()=>{logout()
-              setShowLogout(false)
-            }}>Logout</button></div>}
+            {showLogout && (
+              <div className="bg-black absolute right-0 top-8 text-white px-3 py-2 rounded-md shadow-lg">
+                <button
+                  onClick={() => {
+                    logout();
+                    setShowLogout(false);
+                  }}
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
