@@ -1,7 +1,9 @@
+import { Transaction } from "../models/transaction.model.js";
 import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/AsyncHandler.js";
+import Razorpay from "razorpay";
 
 const generateAccessToken = async (userId) => {
   try {
@@ -123,4 +125,114 @@ const getCurrentUser = asyncHandler(async (req, res, next) => {
     .json(new ApiResponse(200, req.user, "User fetched Successfully"));
 });
 
-export { signUp, logout, login, userCredits,getCurrentUser };
+const razorPayInstance = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
+
+const razorPayPayment = asyncHandler(async (req, res, next) => {
+  const { planId } = req.body;
+  let  userId  = req.user._id;
+
+  if (!planId) return next(new ApiError(400, "Selct plan first"));
+
+  const userData = await User.findById(req.user?._id);
+
+  if (!userData) return next(new ApiError(400, "User not login"));
+
+  let credits, plan, amount, date;
+
+  switch (planId) {
+    case "Basic":
+      plan = "Basic";
+      credits = 15;
+      amount = 10;
+      break;
+
+    case "Advanced":
+      plan = "Advanced";
+      credits = 30;
+      amount = 20;
+      break;
+
+    case "Premier":
+      plan = "Premier";
+      credits = 150;
+      amount = 50;
+      break;
+
+    default:
+      return res.status(200).json(new ApiError(200, "Plan Not found"));
+  }
+
+  date = Date.now();
+
+  const transactionData = {
+    userId,
+    plan,
+    amount,
+    credits,
+    date,
+  };
+
+  const newTransaction = await Transaction.create(transactionData);
+
+  const options = {
+    amount: amount * 100,
+    currency: process.env.CURRENCY,
+    receipt: newTransaction._id,
+  };
+
+  try {
+    const order = await razorPayInstance.orders.create(options);
+    res.status(200).json(new ApiResponse(200, order, "Payment Successfull"));
+  } catch (error) {
+    console.log(error);
+    return next(new ApiError(500, "Error in payment"));
+  }
+  });
+
+
+const verifyRazorPay = asyncHandler(async (req, res, next) => {
+  try {
+    const { razorpay_order_id } = req.body;
+    const orderInfo = await razorPayInstance.orders.fetch(razorpay_order_id);
+
+    if (orderInfo.status !== "paid") {
+      return next(new ApiError(400, "Payment not completed"));
+    }
+
+    const transactionData = await Transaction.findById(orderInfo.receipt);
+    if (!transactionData)
+      return next(new ApiError(404, "Transaction not found"));
+
+    if (transactionData.payment) {
+      return res
+        .status(200)
+        .json(new ApiResponse(200, "Payment already verified"));
+    }
+
+    const userData = await User.findById(transactionData.userId);
+    if (!userData) return next(new ApiError(404, "User not found"));
+
+    userData.creditBalance += transactionData.credits;
+    await userData.save();
+
+    transactionData.payment = true;
+    await transactionData.save();
+
+    res.status(200).json(new ApiResponse(200, "Credits Added"));
+  } catch (error) {
+    next(new ApiError(500, "Error verifying payment"));
+  }
+});
+
+export {
+  signUp,
+  logout,
+  login,
+  userCredits,
+  getCurrentUser,
+  verifyRazorPay,
+  razorPayPayment,
+};
