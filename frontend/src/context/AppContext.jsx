@@ -7,7 +7,7 @@ export const AppContext = createContext();
 const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [credit, setCredit] = useState(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const checkAuth = async () => {
     try {

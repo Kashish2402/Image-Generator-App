@@ -3,7 +3,9 @@ import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/AsyncHandler.js";
-import Razorpay from "razorpay";
+
+
+import {razorPayInstance} from "../utils/razorpayInstance.js"
 
 const generateAccessToken = async (userId) => {
   try {
@@ -125,14 +127,12 @@ const getCurrentUser = asyncHandler(async (req, res, next) => {
     .json(new ApiResponse(200, req.user, "User fetched Successfully"));
 });
 
-const razorPayInstance = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+
 
 const razorPayPayment = asyncHandler(async (req, res, next) => {
   const { planId } = req.body;
   let  userId  = req.user._id;
+
 
   if (!planId) return next(new ApiError(400, "Selct plan first"));
 
