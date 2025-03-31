@@ -38,7 +38,9 @@ function BuyCredit() {
               </p>
               <button
                 className="w-full bg-blue-700 text-white mt-8 text-sm rounded-full py-2.5 min-w-52 cursor-pointer"
-                onClick={() => razorpay(item.id)}
+                onClick={() => {
+                  razorpay(item.id);
+                }}
               >
                 Purchase
               </button>
