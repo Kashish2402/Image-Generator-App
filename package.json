@@ -11,6 +11,7 @@
   "author": "Kashish Gupta",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.8.4",
     "dotenv": "^16.4.7"
   }
 }
