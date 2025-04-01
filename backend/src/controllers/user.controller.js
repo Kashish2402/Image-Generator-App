@@ -80,7 +80,7 @@ const login = asyncHandler(async (req, res, next) => {
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
     .json(
-      new ApiResponse(200, { user: loggedInUser, accessToken, refreshToken })
+      new ApiResponse(200, { user: loggedInUser, accessToken, refreshToken },"User Logged in Successfully!!")
     );
 });
 
