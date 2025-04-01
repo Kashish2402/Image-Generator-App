@@ -103,7 +103,8 @@ const AppContextProvider = ({ children }) => {
 
   const generateImage = async (prompt) => {
     try {
-      const response = await axiosInstance.post("/generate-image", { prompt });
+      console.log(prompt)
+      const response = await axiosInstance.post("/images/generate-image", { prompt });
       if (response.data.success) {
         loadCredits();
         return { success: true, image: response.data.data.resultImage };

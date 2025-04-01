@@ -16,7 +16,7 @@ function Results() {
     setLoading(true);
 
     if (input) {
-      const image=await generateImage()
+      const image=await generateImage(input)
       if (image) {
         setIsImageLoaded(true);
         setImage(image);
