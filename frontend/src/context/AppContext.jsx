@@ -1,12 +1,14 @@
 import React, { createContext, useState } from "react";
 import { axiosInstance } from "../lib/axios";
 import { useNavigate } from "react-router-dom";
+import {toast} from "react-hot-toast"
 
 export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [credit, setCredit] = useState(null);
+  const [isAuthenticated,setIsAuthenticated]=useState()
   const navigate = useNavigate();
 
   const checkAuth = async () => {
@@ -36,6 +38,8 @@ const AppContextProvider = ({ children }) => {
       if (response.data.success) {
         setUser(response.data.data.user);
         setCredit(response.data.data.user.creditBalance);
+        setIsAuthenticated(true)
+        toast.success(response.data.message)
         return { success: true };
       }
     } catch (error) {
@@ -52,6 +56,8 @@ const AppContextProvider = ({ children }) => {
 
       if (response.data.success) {
         setUser(response.data.data.user);
+        setIsAuthenticated(true)
+        toast.success(response.data.message)
         return { success: true };
       }
     } catch (error) {
@@ -69,6 +75,8 @@ const AppContextProvider = ({ children }) => {
       if (response.data.success) {
         setUser(null);
         setCredit(null);
+        setIsAuthenticated(false)
+        console.log("User after logout:", user)
       }
 
       return { success: true };
@@ -86,6 +94,7 @@ const AppContextProvider = ({ children }) => {
 
       if (response.data.success) {
         setCredit(response.data.data.credits);
+        // toast.success(response.data.message)
       }
 
       return { success: true };
@@ -138,6 +147,7 @@ const AppContextProvider = ({ children }) => {
           if (response.data.success) {
             await loadCredits();
             navigate("/");
+            toast.success(response.data.message)
           }
         } catch (error) {
           console.error(error.response?.data || error.message);
@@ -173,6 +183,7 @@ const AppContextProvider = ({ children }) => {
       value={{
         user,
         checkAuth,
+        isAuthenticated,
         setUser,
         credit,
         setCredit,

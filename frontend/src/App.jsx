@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import { AppContext } from "./context/AppContext";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const { user, checkAuth } = useContext(AppContext);
@@ -23,7 +24,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signUp" element={<SignUp />}></Route>
         </Routes>
-      
+      <Toaster/>
     </div>
   );
 }

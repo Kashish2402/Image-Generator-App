@@ -4,17 +4,19 @@ import { Star } from "lucide-react";
 import { AppContext } from "../context/AppContext";
 
 function Navbar() {
-  const { user, logout,credit,loadCredits } = useContext(AppContext);
+  const { user, logout,credit,loadCredits,isAuthenticated } = useContext(AppContext);
 
   useEffect(()=>{
     loadCredits()
-  })
+  },[user,credit])
 
   const [showLogout, setShowLogout] = useState(false);
   const navigate = useNavigate();
 
 
-  const handleSubsription = () => {};
+  const handleSubsription = () => {
+    navigate('/buy')
+  };
 
   return (
     <div className="flex items-center justify-between py-5">
@@ -26,7 +28,7 @@ function Navbar() {
         </Link>
       </div>
 
-      {!user ? (
+      {!isAuthenticated ? (
         <div className="flex items-center gap-5">
           <button
             className="bg-purple-700 px-3 py-1 rounded-3xl cursor-pointer hover:bg-purple-900 transition-colors ease-out duration-150"
