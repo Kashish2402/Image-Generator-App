@@ -7,8 +7,7 @@ export const AppContext = createContext();
 const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [credit, setCredit] = useState(null);
-  const navigate=useNavigate()
-  
+  const navigate = useNavigate();
 
   const checkAuth = async () => {
     try {
@@ -103,10 +102,12 @@ const AppContextProvider = ({ children }) => {
 
   const generateImage = async (prompt) => {
     try {
-      console.log(prompt)
-      const response = await axiosInstance.post("/images/generate-image", { prompt });
+      console.log(prompt);
+      const response = await axiosInstance.post("/images/generate-image", {
+        prompt,
+      });
       if (response.data.success) {
-        loadCredits();
+        await loadCredits();
         return { success: true, image: response.data.data.resultImage };
       }
     } catch (error) {
@@ -130,10 +131,13 @@ const AppContextProvider = ({ children }) => {
       receipt: order.receipt,
       handler: async (data) => {
         try {
-          const response = await axiosInstance.post("/users/verify-razor", data);
+          const response = await axiosInstance.post(
+            "/users/verify-razor",
+            data
+          );
           if (response.data.success) {
             await loadCredits();
-            navigate('/')
+            navigate("/");
           }
         } catch (error) {
           console.error(error.response?.data || error.message);
@@ -152,9 +156,9 @@ const AppContextProvider = ({ children }) => {
         navigate("/login");
         return;
       }
-      console.log("Sending Plan to API:", {planId});
+      console.log("Sending Plan to API:", { planId });
 
-      const response = await axiosInstance.post("/users/pay-razor",{planId});
+      const response = await axiosInstance.post("/users/pay-razor", { planId });
 
       if (response.data.success) {
         await initPay(response.data.data);

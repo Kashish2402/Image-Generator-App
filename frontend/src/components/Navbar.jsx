@@ -4,14 +4,15 @@ import { Star } from "lucide-react";
 import { AppContext } from "../context/AppContext";
 
 function Navbar() {
-  const { user, logout } = useContext(AppContext);
+  const { user, logout,credit,loadCredits } = useContext(AppContext);
+
+  useEffect(()=>{
+    loadCredits()
+  })
 
   const [showLogout, setShowLogout] = useState(false);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   console.log("User changed:", user); // 🔍 Debug: Check if the user state updates in Navbar
-  // }, [user]);
 
   const handleSubsription = () => {};
 
@@ -46,7 +47,7 @@ function Navbar() {
           <div className="text-white flex items-center space-x-4 relative">
             <button className="flex items-center justify-center gap-1 bg-black px-3 py-1 rounded-2xl" onClick={()=>navigate('/buy')}>
               <Star size={16} />
-              <p className="text-white/80 text-nowrap">Credits left : 5</p>
+              <p className="text-white/80 text-nowrap">Credits left :{credit}</p>
             </button>
             <p
               onClick={() => setShowLogout(!showLogout)}
