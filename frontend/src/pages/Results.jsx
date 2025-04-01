@@ -3,6 +3,7 @@ import { assets } from "../assets/assets";
 import { delay, motion } from "motion/react";
 import { AppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 function Results() {
   const [image, setImage] = useState(assets.sample_img);
