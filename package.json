@@ -1,0 +1,13 @@
+{
+  "name": "imagen",
+  "version": "1.0.0",
+  "main": "backend/src/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon backend/src/index.js",
+    "build":"npm install && npm install --prefix frontend && npm run build --prefix frontend && npm run build --prefix backend",
+    "start": "node backend/src/index.js"
+  },
+  "author": "Kashish Gupta",
+  "license": "ISC"
+}
