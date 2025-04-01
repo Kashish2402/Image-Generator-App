@@ -11,7 +11,7 @@ function Steps() {
     viewport={{once:true}}
     >
       <div className="flex flex-col items-center">
-        <h1 className="border border-gray-400/50 w-fit px-16 py-3 rounded-4xl md:text-5xl text-3xl ">
+        <h1 className="text-center border border-gray-400/50 w-fit px-16 py-3 rounded-4xl md:text-5xl text-3xl ">
           How AI Magic Works?
         </h1>
         <p className="mt-2  text-neutral-400 tracking-wide">
