@@ -2,12 +2,14 @@ import React, { useContext, useState } from "react";
 import { assets } from "../assets/assets";
 import { delay, motion } from "motion/react";
 import { AppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 function Results() {
   const [image, setImage] = useState(assets.sample_img);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState("");
+  const navigate=useNavigate()
 
   const { generateImage } = useContext(AppContext);
 
@@ -34,7 +36,8 @@ function Results() {
       onSubmit={handleSubmit}
       className="flex flex-col min-h-[90vh] justify-center items-center"
     >
-      <div>
+      <div className="relative">
+      <ArrowLeft size={30} className="text-white absolute top-10 left-10" onClick={()=>navigate('../')}/>
         <div className="relative">
           <img src={image} alt="" className="max-w-sm rounded" />
           <span

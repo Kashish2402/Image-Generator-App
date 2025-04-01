@@ -19,10 +19,10 @@ function App() {
     
         <Routes>
           <Route path="/" element={<Home />}></Route>
-          <Route path="/result" element={<Results />}></Route>
+          <Route path="/result" element={user?<Results />:<Login/>}></Route>
           <Route path="/buy" element={<BuyCredit />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/signUp" element={<SignUp />}></Route>
+          <Route path="/login" element={!user &&<Login />}></Route>
+          <Route path="/signUp" element={!user && <SignUp />}></Route>
         </Routes>
       <Toaster/>
     </div>
