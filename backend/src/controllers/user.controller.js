@@ -187,7 +187,6 @@ const razorPayPayment = asyncHandler(async (req, res, next) => {
     const order = await razorPayInstance.orders.create(options);
     res.status(200).json(new ApiResponse(200, order, "Payment Successfull"));
   } catch (error) {
-    console.log(error);
     return next(new ApiError(500, "Error in payment"));
   }
   });

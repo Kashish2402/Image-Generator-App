@@ -21,7 +21,7 @@ const AppContextProvider = ({ children }) => {
         setUser(null);
       }
     } catch (error) {
-      console.log(error);
+    
       console.error(
         "Unable to fetch Cuurent user !! Error :::",
         error.response?.data || error.message
@@ -33,7 +33,6 @@ const AppContextProvider = ({ children }) => {
   const login = async (formData) => {
     try {
       const response = await axiosInstance.post("/users/login", formData);
-      console.log(response.data);
 
       if (response.data.success) {
         setUser(response.data.data.user);
@@ -43,7 +42,6 @@ const AppContextProvider = ({ children }) => {
         return { success: true };
       }
     } catch (error) {
-      console.log(error);
       console.error("Login failed: ", error.response?.data || error.message);
 
       return { success: false, message: error.response?.data?.message };
@@ -61,7 +59,6 @@ const AppContextProvider = ({ children }) => {
         return { success: true };
       }
     } catch (error) {
-      console.log(error);
       console.error("Signup failed: ", error.response?.data || error.message);
 
       return { success: false, message: error.response?.data?.message };
@@ -76,12 +73,10 @@ const AppContextProvider = ({ children }) => {
         setUser(null);
         setCredit(null);
         setIsAuthenticated(false)
-        console.log("User after logout:", user)
       }
 
       return { success: true };
     } catch (error) {
-      console.log(error);
       console.error("Logout failed: ", error.response?.data || error.message);
 
       return { success: false, message: error.response?.data?.message };
@@ -99,7 +94,6 @@ const AppContextProvider = ({ children }) => {
 
       return { success: true };
     } catch (error) {
-      console.log(error);
       console.error(
         "Unable to load credits: ",
         error.response?.data || error.message
@@ -111,7 +105,6 @@ const AppContextProvider = ({ children }) => {
 
   const generateImage = async (prompt) => {
     try {
-      console.log(prompt);
       const response = await axiosInstance.post("/images/generate-image", {
         prompt,
       });
@@ -120,7 +113,6 @@ const AppContextProvider = ({ children }) => {
         return { success: true, image: response.data.data.resultImage };
       }
     } catch (error) {
-      console.log(error);
       console.error(
         "Unable to Generate Image: ",
         error.response?.data || error.message
@@ -166,7 +158,6 @@ const AppContextProvider = ({ children }) => {
         navigate("/login");
         return;
       }
-      console.log("Sending Plan to API:", { planId });
 
       const response = await axiosInstance.post("/users/pay-razor", { planId });
 

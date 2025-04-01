@@ -29,7 +29,6 @@ function Login() {
     }
 
     navigate("/");
-    console.log(user)
     setFormData({
       fullName: "",
       email: "",

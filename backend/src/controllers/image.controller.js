@@ -6,10 +6,7 @@ import { asyncHandler } from "../utils/AsyncHandler.js";
 import FormData from "form-data";
 
 export const generateImage = asyncHandler(async (req, res, next) => {
-  console.log(`Requesting... `)
   const { prompt } = req.body;
-
-  console.log("Request Body: ", req.body);
 
   if (!prompt) return next(new ApiError(400, "Prompt required to generate image"));
 
@@ -34,8 +31,6 @@ export const generateImage = asyncHandler(async (req, res, next) => {
         responseType: "arraybuffer",
       }
     );
-
-    console.log("API Response:", data);
 
     const base64Image = Buffer.from(data, "binary").toString("base64");
     const resultImage = `data:image/png;base64,${base64Image}`;
