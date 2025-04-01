@@ -9,7 +9,7 @@ import { AppContext } from "./context/AppContext";
 import { Toaster } from "react-hot-toast";
 
 function App() {
-  const { user, checkAuth } = useContext(AppContext);
+  const { user, checkAuth,isAuthenticated } = useContext(AppContext);
   useEffect(() => {
     checkAuth();
   }, [user, checkAuth]);
@@ -18,15 +18,15 @@ function App() {
     <div className="px-4 sm:px-10 md:px-14 lg:px-28 xl:px-28 2xl:px-32 min-h-screen text-white bg-[#121212]">
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        <Route path="/result" element={user ? <Results /> : <Login />}></Route>
+        <Route path="/result" element={isAuthenticated ? <Results /> : <Login />}></Route>
         <Route path="/buy" element={<BuyCredit />}></Route>
         <Route
           path="/login"
-          element={user === null ? <Login /> : <Home />}
+          element={!isAuthenticated ? <Login /> : <Home />}
         ></Route>
         <Route
           path="/signUp"
-          element={user === null ? <SignUp /> : <Home />}
+          element={!isAuthenticated ? <SignUp /> : <Home />}
         ></Route>
       </Routes>
       <Toaster />
