@@ -4,7 +4,6 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { motion, delay } from "motion/react";
 import { Mail, UserRound } from "lucide-react";
 import { AppContext } from "../context/AppContext";
-import {toast} from 'react-hot-toast'
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -28,9 +27,8 @@ function SignUp() {
       setError(check.message);
       return;
     }
-    
-    toast.success("Account created Successfully, Login to generate image")
-    navigate('/login')
+
+    navigate('/')
     setFormData({ fullName: "", email: "", password: "" });
   };
 
