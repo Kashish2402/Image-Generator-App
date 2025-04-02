@@ -53,7 +53,7 @@ const AppContextProvider = ({ children }) => {
       const response = await axiosInstance.post("/users/signup", formData);
 
       if (response.data.success) {
-        setUser(response.data.data.user);
+        setUser(response.data.data);
         setIsAuthenticated(true)
         toast.success(response.data.message)
         return { success: true };
